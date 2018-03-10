@@ -34,10 +34,9 @@ def draw(event, x, y, flags , param):
     #prédiction
     if event == cv2.EVENT_LBUTTONUP:
         resized = scipy.misc.imresize(np.resize(img, [280, 280]), 10, mode='L')
-        redimensioned = np.reshape(resized, [1, 784])
         img3 = resized
         img3 = np.reshape(img3, [28, 28, 1])
-        final = redimensioned/255
+        final = np.reshape(resized, [1,28,28,1])/255
         with tf.Session() as sess:
             saver.restore(sess=sess, save_path="model.ckpt")
             Z = logits.eval(feed_dict={X: final})
